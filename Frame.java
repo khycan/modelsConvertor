@@ -1,30 +1,26 @@
+package obj2F;
 import java.io.File;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 
 //////////////
 // MY IMPORT
-import Parser;
 
-public class MainFrame {
+public class Frame implements ActionListener {
 	private JFrame m_window;
 	private JFileChooser m_chooser;
 	private File m_file;
 	private JButton m_openButton;
 	private JButton m_convertButton;
-	private JLable m_filename;
+	private JLabel m_filename;
 	
 	private Parser m_parser;
 	
-	public void MainFrame() {
-		m_window = 0;
-		m_file = 0;
-		m_chooser = 0;
-		m_openButton = 0;
-		m_convertButton = 0;
+	// 아무것도 하지 않는다.
+	public Frame() {
 		
-		m_parser = 0;
 	}
 	
 	public void Init() {
@@ -36,6 +32,15 @@ public class MainFrame {
 		
 		m_parser =  new Parser();
 		
+		
+		// 레이아웃 설정
+		m_window.setLayout(new FlowLayout());
+		
+		// change size of component before add them to frame.
+		m_openButton.setBounds(10, 10, 50, 50);
+		m_convertButton.setBounds(70, 10, 50, 50);
+		m_filename.setBounds(10, 70, 100, 50);
+		
 		// Add component to frame.
 		m_window.add(m_filename);
 		m_window.add(m_openButton);
@@ -44,7 +49,7 @@ public class MainFrame {
 		// Set size of frame.
 		m_window.setSize(500, 500);
 		
-		// Show frae.
+		// Show frame.
 		m_window.setVisible(true);
 		
 		// Register event listener.
@@ -64,14 +69,13 @@ public class MainFrame {
 				m_filename.setText(m_file.toString());
 			}
 		} else if (e.getSource().equals(m_convertButton)) {
-			m_parser.extract(m_file.toString());
-			
-			m_parser.export();
+			m_parser.convert(m_file.toString());
+	
 		}
 	}
 	
 	public static void main(String args[]) {
-		MainFrame f = new MainFrame();
+		Frame f = new Frame();
 		
 		f.Init();
 	}
